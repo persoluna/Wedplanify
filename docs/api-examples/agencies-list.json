@@ -1,0 +1,96 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "slug": "evergreen-events",
+      "business_name": "Evergreen Events",
+      "description": "Full-service wedding planning studio focused on elegant ceremonies, premium vendor coordination, and seamless guest experiences.",
+      "specialties": [
+        "Wedding planning",
+        "Event coordination",
+        "Venue styling"
+      ],
+      "years_in_business": 9,
+      "location": {
+        "address": "24 Lake View Road",
+        "city": "Toronto",
+        "state": "Ontario",
+        "postal_code": "M5V 2T6",
+        "country": "Canada",
+        "latitude": 43.6532,
+        "longitude": -79.3832
+      },
+      "contact": {
+        "phone": "+1 416 555 0198",
+        "email": "hello@evergreenevents.example",
+        "website": "https://evergreenevents.example",
+        "whatsapp": "+1 416 555 0101"
+      },
+      "social": {
+        "facebook": "https://facebook.com/evergreenevents",
+        "instagram": "https://instagram.com/evergreenevents",
+        "twitter": null,
+        "linkedin": "https://linkedin.com/company/evergreenevents",
+        "youtube": null
+      },
+      "stats": {
+        "avg_rating": 4.9,
+        "review_count": 37,
+        "views_count": 1284,
+        "verified": true,
+        "featured": true,
+        "premium": false
+      },
+      "media": {
+        "logo": "https://cdn.example.com/storage/agencies/evergreen-events/logo.jpg",
+        "banner": "https://cdn.example.com/storage/agencies/evergreen-events/banner.jpg",
+        "gallery": [
+          "https://cdn.example.com/storage/agencies/evergreen-events/gallery/1.jpg",
+          "https://cdn.example.com/storage/agencies/evergreen-events/gallery/2.jpg"
+        ]
+      },
+      "tags": [
+        "Luxury",
+        "Destination weddings",
+        "Planning"
+      ],
+      "links": {
+        "website": "https://evergreenevents.example"
+      },
+      "created_at": "2026-03-01T09:15:00+00:00",
+      "updated_at": "2026-03-20T14:42:11+00:00"
+    }
+  ],
+  "links": {
+    "first": "https://your-domain.test/api/v1/agencies?page=1",
+    "last": "https://your-domain.test/api/v1/agencies?page=1",
+    "prev": null,
+    "next": null
+  },
+  "meta": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 1,
+    "links": [
+      {
+        "url": null,
+        "label": "Previous",
+        "active": false
+      },
+      {
+        "url": "https://your-domain.test/api/v1/agencies?page=1",
+        "label": "1",
+        "active": true
+      },
+      {
+        "url": null,
+        "label": "Next",
+        "active": false
+      }
+    ],
+    "path": "https://your-domain.test/api/v1/agencies",
+    "per_page": 15,
+    "to": 1,
+    "total": 1
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "data": [
+    {
+      "id": 5,
+      "slug": "floral-boutique",
+      "business_name": "The Floral Boutique",
+      "description": "Boutique floral studio crafting ceremony arches, bridal bouquets, and reception centerpieces with seasonal blooms.",
+      "category": {
+        "id": 2,
+        "name": "Florist"
+      },
+      "pricing": {
+        "min_price": 500,
+        "max_price": 3000,
+        "price_unit": "event"
+      },
+      "location": {
+        "address": "118 Granville Street",
+        "city": "Vancouver",
+        "state": "British Columbia",
+        "postal_code": "V6C 1S4",
+        "country": "Canada",
+        "latitude": 49.2827,
+        "longitude": -123.1207
+      },
+      "contact": {
+        "phone": "+1 604 555 0134",
+        "email": "studio@floralboutique.example",
+        "website": "https://floralboutique.example",
+        "whatsapp": "+1 604 555 0177"
+      },
+      "social": {
+        "facebook": "https://facebook.com/floralboutique",
+        "instagram": "https://instagram.com/floralboutique",
+        "twitter": null,
+        "linkedin": null,
+        "youtube": null
+      },
+      "stats": {
+        "avg_rating": 4.8,
+        "review_count": 22,
+        "views_count": 194,
+        "verified": true,
+        "featured": false,
+        "premium": false
+      },
+      "media": {
+        "logo": "https://cdn.example.com/storage/vendors/floral-boutique/logo.png",
+        "banner": "https://cdn.example.com/storage/vendors/floral-boutique/banner.png",
+        "gallery": [
+          "https://cdn.example.com/storage/vendors/floral-boutique/gallery/1.png"
+        ]
+      },
+      "tags": [
+        "Florals",
+        "Luxury",
+        "Custom design"
+      ],
+      "created_at": "2026-02-18T08:00:00+00:00",
+      "updated_at": "2026-03-19T16:20:10+00:00"
+    }
+  ],
+  "links": {
+    "first": "https://your-domain.test/api/v1/vendors?page=1",
+    "last": "https://your-domain.test/api/v1/vendors?page=1",
+    "prev": null,
+    "next": null
+  },
+  "meta": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 1,
+    "links": [
+      {
+        "url": null,
+        "label": "Previous",
+        "active": false
+      },
+      {
+        "url": "https://your-domain.test/api/v1/vendors?page=1",
+        "label": "1",
+        "active": true
+      },
+      {
+        "url": null,
+        "label": "Next",
+        "active": false
+      }
+    ],
+    "path": "https://your-domain.test/api/v1/vendors",
+    "per_page": 15,
+    "to": 1,
+    "total": 1
+  }
+}

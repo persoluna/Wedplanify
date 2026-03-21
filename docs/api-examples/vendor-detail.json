@@ -1,0 +1,76 @@
+{
+  "data": {
+    "id": 5,
+    "slug": "floral-boutique",
+    "business_name": "The Floral Boutique",
+    "description": "Boutique floral studio crafting ceremony arches, bridal bouquets, and reception centerpieces with seasonal blooms.",
+    "category": {
+      "id": 2,
+      "name": "Florist"
+    },
+    "pricing": {
+      "min_price": 500,
+      "max_price": 3000,
+      "price_unit": "event"
+    },
+    "location": {
+      "address": "118 Granville Street",
+      "city": "Vancouver",
+      "state": "British Columbia",
+      "postal_code": "V6C 1S4",
+      "country": "Canada",
+      "latitude": 49.2827,
+      "longitude": -123.1207
+    },
+    "contact": {
+      "phone": "+1 604 555 0134",
+      "email": "studio@floralboutique.example",
+      "website": "https://floralboutique.example",
+      "whatsapp": "+1 604 555 0177"
+    },
+    "social": {
+      "facebook": "https://facebook.com/floralboutique",
+      "instagram": "https://instagram.com/floralboutique",
+      "twitter": null,
+      "linkedin": null,
+      "youtube": null
+    },
+    "stats": {
+      "avg_rating": 4.8,
+      "review_count": 22,
+      "views_count": 195,
+      "verified": true,
+      "featured": false,
+      "premium": false
+    },
+    "media": {
+      "logo": "https://cdn.example.com/storage/vendors/floral-boutique/logo.png",
+      "banner": "https://cdn.example.com/storage/vendors/floral-boutique/banner.png",
+      "gallery": [
+        "https://cdn.example.com/storage/vendors/floral-boutique/gallery/1.png",
+        "https://cdn.example.com/storage/vendors/floral-boutique/gallery/2.png"
+      ]
+    },
+    "services": [
+      {
+        "id": 11,
+        "name": "Bouquet design",
+        "price": 250,
+        "description": "Custom bridal and bridesmaid bouquets with fresh seasonal flowers."
+      },
+      {
+        "id": 12,
+        "name": "Ceremony arch styling",
+        "price": 900,
+        "description": "Full floral installation for arches, aisles, and altar spaces."
+      }
+    ],
+    "tags": [
+      "Florals",
+      "Luxury",
+      "Custom design"
+    ],
+    "created_at": "2026-02-18T08:00:00+00:00",
+    "updated_at": "2026-03-21T10:10:45+00:00"
+  }
+}
