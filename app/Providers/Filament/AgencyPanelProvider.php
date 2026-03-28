@@ -4,7 +4,9 @@ namespace App\Providers\Filament;
 
 use App\Filament\Agency\Pages\AgencyDashboard;
 use App\Filament\Agency\Pages\EditAgencyProfile;
+use App\Filament\Resources\Bookings\BookingResource;
 use App\Filament\Resources\Inquiries\InquiryResource;
+use App\Filament\Resources\VendorAvailabilities\VendorAvailabilityResource;
 use App\Filament\Resources\Vendors\VendorResource;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\FontProviders\GoogleFontProvider;
@@ -38,8 +40,9 @@ class AgencyPanelProvider extends PanelProvider
             ])
             ->viteTheme('resources/css/filament/agency/theme.css')
             ->resources([
-                VendorResource::class,
                 InquiryResource::class,
+                BookingResource::class,
+                VendorAvailabilityResource::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Agency/Widgets'), for: 'App\\Filament\\Agency\\Widgets')
             ->pages([

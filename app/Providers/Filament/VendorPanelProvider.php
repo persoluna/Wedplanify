@@ -2,7 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\Bookings\BookingResource;
 use App\Filament\Resources\Inquiries\InquiryResource;
+use App\Filament\Resources\VendorAvailabilities\VendorAvailabilityResource;
 use App\Filament\Vendor\Pages\EditVendorProfile;
 use App\Filament\Vendor\Pages\VendorDashboard;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
@@ -38,6 +40,8 @@ class VendorPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/vendor/theme.css')
             ->resources([
                 InquiryResource::class,
+                BookingResource::class,
+                VendorAvailabilityResource::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Vendor/Widgets'), for: 'App\\Filament\\Vendor\\Widgets')
             ->pages([

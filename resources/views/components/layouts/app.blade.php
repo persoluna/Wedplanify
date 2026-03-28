@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
 </head>
 <body x-data class="bg-stone-50 text-stone-800 transition-colors duration-300 min-h-screen font-sans selection:bg-champagne-200 selection:text-stone-900 flex flex-col">
     <x-layouts.navbar :transparent="$transparentNav" />
@@ -44,5 +45,6 @@
             });
         });
     </script>
+    @stack('scripts')
 </body>
 </html>

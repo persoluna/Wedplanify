@@ -10,7 +10,7 @@ class ListingController extends Controller
     public function show($type, $slug)
     {
         if ($type === 'vendor') {
-            $listing = Vendor::with(['media', 'category', 'tags', 'reviews.client.user'])
+            $listing = Vendor::with(['media', 'category', 'tags', 'reviews.client.user', 'availabilities'])
                 ->where('slug', $slug)
                 ->firstOrFail();
             $listing->listing_type = 'vendor';

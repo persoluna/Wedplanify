@@ -159,6 +159,83 @@
                             @endforelse
                         </div>
                     </section>
+
+                    <!-- Availability Calendar Section -->
+                    @if($listing->listing_type === 'vendor')
+                    <section class="bg-white rounded-3xl p-8 border border-stone-200 shadow-sm" x-data="vendorCalendar()">
+                        <div class="flex justify-between items-center mb-6 border-b border-stone-100 pb-4">
+                            <h2 class="text-2xl font-serif text-navy-900">Availability</h2>
+                            <div class="flex items-center gap-4 text-sm">
+                                <div class="flex items-center gap-1"><div class="w-3 h-3 rounded-full bg-champagne-500"></div> Available</div>
+                                <div class="flex items-center gap-1"><div class="w-3 h-3 rounded-full bg-rose-500"></div> Booked</div>
+                            </div>
+                        </div>
+
+                        <div id="availability-calendar" class="fc-theme-standard"></div>
+                    </section>
+
+                    @push('styles')
+                    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet" />
+                    <style>
+                        .fc .fc-toolbar-title { font-family: ui-serif, Georgia, serif; font-size: 1.5rem; color: #1B2A4A; }
+                        .fc .fc-button-primary { background-color: #1B2A4A; border-color: #1B2A4A; }
+                        .fc .fc-button-primary:not(:disabled):active, .fc .fc-button-primary:not(:disabled).fc-button-active { background-color: #E5E1D8; color: #1B2A4A; border-color: #E5E1D8; }
+                        .fc .fc-daygrid-day.fc-day-today { background-color: #f8fafc; }
+                    </style>
+                    @endpush
+
+                    @push('scripts')
+                    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+                    <script>
+                        document.addEventListener('alpine:init', () => {
+                            Alpine.data('vendorCalendar', () => ({
+                                init() {
+                                    const rawAvailabilities = @js($listing->availabilities ?? []);
+                                    const events = rawAvailabilities.map(a => {
+                                        let color = '#C2B28F'; // champagne-500 default available
+                                        let title = 'Available';
+                                        
+                                        if (a.status === 'fully_booked') {
+                                            color = '#f43f5e'; // rose-500
+                                            title = 'Booked';
+                                        } else if(a.status === 'partially_booked') {
+                                            color = '#f59e0b';
+                                            title = 'Partial';
+                                        } else if(a.status === 'unavailable') {
+                                            color = '#9ca3af';
+                                            title = 'Unavailable';
+                                        }
+
+                                        return {
+                                            title: title,
+                                            start: a.date,
+                                            allDay: true,
+                                            color: color,
+                                            display: 'background'
+                                        };
+                                    });
+
+                                    const calendarEl = document.getElementById('availability-calendar');
+                                    const calendar = new FullCalendar.Calendar(calendarEl, {
+                                        initialView: 'dayGridMonth',
+                                        events: events,
+                                        height: 500,
+                                        headerToolbar: {
+                                            left: 'prev',
+                                            center: 'title',
+                                            right: 'next'
+                                        },
+                                        validRange: {
+                                            start: new Date().toISOString().split('T')[0] // Only show from today onwards
+                                        }
+                                    });
+                                    calendar.render();
+                                }
+                            }));
+                        });
+                    </script>
+                    @endpush
+                    @endif
                 </div>
 
                 <!-- Sidebar Column -->
