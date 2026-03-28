@@ -53,17 +53,26 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'partner_name' => ['nullable', 'string', 'max:255'],
+            'wedding_date' => ['nullable', 'date'],
+            'wedding_city' => ['nullable', 'string', 'max:255'],
         ]);
 
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'phone' => $validated['phone'] ?? null,
             'type' => 'client',
         ]);
+        $user->assignRole('client');
 
         Client::create([
             'user_id' => $user->id,
+            'partner_name' => $validated['partner_name'] ?? null,
+            'wedding_date' => $validated['wedding_date'] ?? null,
+            'wedding_city' => $validated['wedding_city'] ?? null,
         ]);
 
         Auth::login($user);

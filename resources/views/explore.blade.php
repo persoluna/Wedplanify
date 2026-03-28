@@ -94,13 +94,34 @@
                                             <div class="absolute top-4 left-4 flex flex-col gap-2">
                                                 @if($listing->featured || $listing->premium)
                                                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-champagne-500 text-white shadow-sm backdrop-blur-sm">
-                                                        <svg class="-ml-0.5 mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>
+                                                        <svg class="-ml-0.5 mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>
                                                         Featured
                                                     </span>
                                                 @endif
                                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-black/60 text-white backdrop-blur-md">
                                                     {{ ucfirst($listing->listing_type) }}
                                                 </span>
+                                            </div>
+
+                                            <!-- Alpine Save Button -->
+                                            <div role="button" @click.prevent="$store.savedListings.toggle({
+                                                    id: '{{ $listing->id }}',
+                                                    type: '{{ $listing->listing_type }}',
+                                                    title: @js($listing->business_name),
+                                                    image: @js($imageUrl),
+                                                    location: @js($listing->city . ', ' . ($listing->state ?? 'NY')),
+                                                    rating: @js(number_format($listing->avg_rating ?? 5.0, 1)),
+                                                    reviews: @js($listing->review_count ?? 12),
+                                                    slug: @js($listing->slug)
+                                                })"
+                                                class="absolute top-4 right-4 p-2.5 rounded-full backdrop-blur-md shadow-sm transition-all duration-300 z-10"
+                                                :class="$store.savedListings.has('{{ $listing->id }}', '{{ $listing->listing_type }}') ? 'bg-rose-50 border border-rose-200 text-rose-500' : 'bg-white/80 border border-white/40 text-stone-400 hover:text-rose-500 hover:bg-white'"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                                    :fill="$store.savedListings.has('{{ $listing->id }}', '{{ $listing->listing_type }}') ? 'currentColor' : 'none'"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                                                </svg>
                                             </div>
                                         </div>
                                         <div class="p-6 flex flex-col flex-grow">

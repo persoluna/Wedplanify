@@ -1,4 +1,4 @@
-<x-layouts.app transparentNav="true">
+<x-layouts.app :transparent-nav="true">
 
     <!-- Hero Section -->
     <div class="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-stone-900 pt-20">
@@ -106,9 +106,9 @@
                          x-transition.opacity.duration.200ms
                          class="absolute top-14 left-0 md:left-1/2 md:-translate-x-1/2 w-full md:w-[340px] bg-white rounded-3xl shadow-2xl border border-stone-100 p-6 z-50">
                         <div class="flex justify-between items-center mb-6">
-                            <button type="button" @click.stop="currentMonth--" class="p-2 hover:bg-stone-100 rounded-full transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-stone-600"><path d="m15 18-6-6 6-6"/></svg></button>
+                            <button type="button" @click.stop="currentMonth--" class="p-2 hover:bg-stone-100 rounded-full transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-stone-600"><path d="m15 18-6-6 6-6"/></button>
                             <span class="font-serif text-lg font-medium text-stone-900" x-text="months[realMonthIndex] + ' ' + realYear"></span>
-                            <button type="button" @click.stop="currentMonth++" class="p-2 hover:bg-stone-100 rounded-full transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-stone-600"><path d="m9 18 6-6-6-6"/></svg></button>
+                            <button type="button" @click.stop="currentMonth++" class="p-2 hover:bg-stone-100 rounded-full transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-stone-600"><path d="m9 18 6-6-6-6"/></button>
                         </div>
                         <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-3">
                             <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
@@ -149,14 +149,14 @@
     </div>
 
     <!-- Featured Collections List -->
-    <div class="py-32 bg-stone-50 dark:bg-navy-950 transition-colors">
+    <div class="py-32 bg-stone-50  transition-colors">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                 <div class="max-w-xl">
-                    <h2 class="font-display text-4xl md:text-5xl text-stone-900 dark:text-white mb-4 leading-tight">Featured Collections</h2>
-                    <p class="text-stone-500 dark:text-stone-400 font-light text-lg">Handpicked by our editorial team to ensure your day is nothing short of extraordinary.</p>
+                    <h2 class="font-display text-4xl md:text-5xl text-stone-900  mb-4 leading-tight">Featured Collections</h2>
+                    <p class="text-stone-500  font-light text-lg">Handpicked by our editorial team to ensure your day is nothing short of extraordinary.</p>
                 </div>
-                <a href="/explore" class="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-stone-900 dark:text-white hover:text-champagne-600 dark:hover:text-champagne-400 transition-colors">
+                <a href="/explore" class="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-stone-900  hover:text-champagne-600 :text-champagne-400 transition-colors">
                     <span>View All</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </a>
@@ -164,7 +164,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @forelse($featuredVendors ?? [] as $vendor)
-                    <a href="/listing/vendor/{{ $vendor->slug }}" class="group relative bg-white dark:bg-navy-900 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-stone-200/50 dark:hover:shadow-none transition-all duration-500 cursor-pointer border border-stone-100 dark:border-navy-800 block">
+                    <a href="/listing/vendor/{{ $vendor->slug }}" class="group relative bg-white  rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-stone-200/50 :shadow-none transition-all duration-500 cursor-pointer border border-stone-100  block">
                         <div class="relative aspect-4/5 overflow-hidden">
                             @php
                                 $thumb = null;
@@ -184,6 +184,28 @@
                             @endphp
                             <img src="{{ $thumb }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="{{ $vendor->business_name }}" />
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-60 transition-opacity group-hover:opacity-70"></div>
+
+                            <!-- Alpine Save Button -->
+                            <div role="button" @click.prevent="$store.savedListings.toggle({
+                                    id: '{{ $vendor->id }}',
+                                    type: 'vendor',
+                                    title: @js($vendor->business_name),
+                                    image: @js($thumb),
+                                    location: @js($vendor->city . ', ' . ($vendor->country ?? 'US')),
+                                    rating: @js(number_format($vendor->avg_rating ?? 5.0, 1)),
+                                    reviews: @js($vendor->review_count ?? 12),
+                                    slug: @js($vendor->slug)
+                                })"
+                                class="absolute top-4 right-4 p-2.5 rounded-full backdrop-blur-md shadow-sm transition-all duration-300 z-10"
+                                :class="$store.savedListings.has('{{ $vendor->id }}', 'vendor') ? 'bg-rose-50 border border-rose-200 text-rose-500' : 'bg-white/20 border border-white/40 text-white hover:text-rose-500 hover:bg-white'"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                    :fill="$store.savedListings.has('{{ $vendor->id }}', 'vendor') ? 'currentColor' : 'none'"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                                </svg>
+                            </div>
+
                             <div class="absolute bottom-6 left-6 right-6">
                                 <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-white text-[10px] font-bold tracking-widest uppercase mb-3">
                                     {{ $vendor->category->name ?? 'Vendor' }}
@@ -198,7 +220,7 @@
                     </a>
                 @empty
                     @for($i = 0; $i < 3; $i++)
-                        <div class="group relative bg-white dark:bg-navy-900 rounded-3xl overflow-hidden shadow-sm border border-stone-100 dark:border-navy-800">
+                        <div class="group relative bg-white  rounded-3xl overflow-hidden shadow-sm border border-stone-100 ">
                             <div class="relative aspect-[4/5] overflow-hidden bg-stone-200">
                                 <img src="https://images.unsplash.com/photo-[something]?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover opacity-50" />
                             </div>

@@ -50,3 +50,8 @@ use App\Http\Controllers\ClientController;
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [ClientController::class, 'dashboard'])->name('dashboard');
 });
+
+// Move Saved to essentially be public so LocalStorage can power it for guests as well
+Route::get('/saved', function () {
+    return view('client.saved');
+})->name('saved.index');

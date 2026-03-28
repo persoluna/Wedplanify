@@ -78,10 +78,27 @@
 
                         <!-- Call to actions -->
                         <div class="flex gap-3 mt-4 md:mt-0">
-                            <button class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-5 py-3 rounded-xl font-medium transition-all flex items-center gap-2">
-                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                                Save
-                            </button>
+                            <!-- Alpine Save Button -->
+                            <div role="button" @click.prevent="$store.savedListings.toggle({
+                                      id: '{{ $listing->id }}',
+                                      type: '{{ strtolower(class_basename($listing)) }}',
+                                      title: @js($listing->business_name),
+                                      image: @js($avatar),
+                                      location: @js($listing->city . ', ' . ($listing->state ?? 'NY')),
+                                      rating: @js(number_format($listing->avg_rating ?? 5.0, 1)),
+                                      reviews: @js($listing->reviews->count() ?? 12),
+                                      slug: @js($listing->slug)
+                                })"
+                                class="backdrop-blur-md px-5 py-3 rounded-xl font-medium transition-all flex items-center gap-2 border"
+                                :class="$store.savedListings.has('{{ $listing->id }}', '{{ strtolower(class_basename($listing)) }}') ? 'bg-rose-500/90 border-rose-400 text-white hover:bg-rose-500' : 'bg-white/10 hover:bg-white/20 border-white/20 text-white'"
+                            >
+                                <svg class="w-5 h-5"
+                                     :fill="$store.savedListings.has('{{ $listing->id }}', '{{ strtolower(class_basename($listing)) }}') ? 'currentColor' : 'none'"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg>
+                                <span x-text="$store.savedListings.has('{{ $listing->id }}', '{{ strtolower(class_basename($listing)) }}') ? 'Saved' : 'Save'"></span>
+                            </div>
                             <a href="#contact" class="bg-champagne-600 hover:bg-champagne-500 text-white shadow-lg shadow-champagne-500/30 px-6 py-3 rounded-xl font-medium transition-all flex items-center gap-2">
                                 Request Quote
                             </a>
@@ -171,33 +188,78 @@
                             <h3 class="text-lg font-semibold text-navy-900 mb-6">Contact {{ $listing->business_name }}</h3>
 
                             @if(session('success'))
-                                <div class="bg-green-50 text-green-700 p-4 rounded-xl mb-6 text-sm font-medium border border-green-100">
+                                <div class="bg-green-50 text-green-700 p-4 rounded-xl mb-6">
                                     {{ session('success') }}
                                 </div>
                             @endif
 
-                            <form action="{{ route('inquiry.store', ['type' => $listing->listing_type, 'id' => $listing->id]) }}" method="POST" class="space-y-4">
-                                @csrf
-                                <div>
-                                    <label class="block text-sm font-medium text-stone-700 mb-1">Your Name</label>
-                                    <input type="text" name="name" class="w-full bg-stone-50 border-stone-200 rounded-xl focus:border-champagne-500 focus:ring-champagne-500" required>
+                            @if(session('error'))
+                                <div class="bg-red-50 text-red-700 p-4 rounded-xl mb-6">
+                                    {{ session('error') }}
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-stone-700 mb-1">Email</label>
-                                    <input type="email" name="email" class="w-full bg-stone-50 border-stone-200 rounded-xl focus:border-champagne-500 focus:ring-champagne-500" required>
+                            @endif
+
+                            @auth
+                                @if(auth()->user()->isClient())
+                                    <form action="{{ route('inquiry.store', ['type' => $listing->listing_type, 'id' => $listing->id]) }}" method="POST" class="space-y-4">
+                                        @csrf
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-stone-700 mb-1">Your Name *</label>
+                                                <input type="text" name="name" value="{{ auth()->user()->name }}" class="w-full bg-stone-50 border-stone-200 rounded-xl focus:border-champagne-500 focus:ring-champagne-500" required>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-stone-700 mb-1">Email *</label>
+                                                <input type="email" name="email" value="{{ auth()->user()->email }}" class="w-full bg-stone-50 border-stone-200 rounded-xl focus:border-champagne-500 focus:ring-champagne-500" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-stone-700 mb-1">Phone Number</label>
+                                                <input type="tel" name="phone" value="{{ auth()->user()->phone }}" class="w-full bg-stone-50 border-stone-200 rounded-xl focus:border-champagne-500 focus:ring-champagne-500">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-stone-700 mb-1">Guest Count</label>
+                                                <input type="number" name="guest_count" value="{{ auth()->user()->client?->guest_count }}" class="w-full bg-stone-50 border-stone-200 rounded-xl focus:border-champagne-500 focus:ring-champagne-500">
+                                            </div>
+                                        </div>
+
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-stone-700 mb-1">Event Date</label>
+                                                <input type="date" name="event_date" value="{{ auth()->user()->client?->wedding_date?->format('Y-m-d') }}" class="w-full bg-stone-50 border-stone-200 rounded-xl focus:border-champagne-500 focus:ring-champagne-500">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-stone-700 mb-1">Event City</label>
+                                                <input type="text" name="event_location" value="{{ auth()->user()->client?->wedding_city }}" class="w-full bg-stone-50 border-stone-200 rounded-xl focus:border-champagne-500 focus:ring-champagne-500">
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-stone-700 mb-1">Message *</label>
+                                            <textarea name="message" rows="4" class="w-full bg-stone-50 border-stone-200 rounded-xl focus:border-champagne-500 focus:ring-champagne-500" placeholder="Hi, I'm interested in your services for my wedding..." required></textarea>
+                                        </div>
+                                        <button type="submit" class="w-full bg-navy-900 hover:bg-navy-800 text-white py-3 rounded-xl font-medium transition-all shadow-sm">
+                                            Send Message
+                                        </button>
+                                    </form>
+                                @else
+                                    <div class="text-center p-6 bg-stone-50 rounded-xl border border-stone-200">
+                                        <h4 class="text-lg font-medium text-stone-900 mb-2">Vendors cannot send inquiries</h4>
+                                        <p class="text-stone-600 mb-4">Please log in using a client account if you are planning a wedding.</p>
+                                    </div>
+                                @endif
+                            @else
+                                <div class="text-center p-6 bg-stone-50 rounded-xl border border-stone-200">
+                                    <h4 class="text-lg font-medium text-stone-900 mb-2">Interested in booking?</h4>
+                                    <p class="text-stone-600 mb-5">Please log in or create a free account to send direct inquiries and track all your communications in one place.</p>
+                                    <div class="flex flex-col space-y-3">
+                                        <a href="{{ route('login') }}" class="w-full bg-navy-900 hover:bg-navy-800 text-white py-3 rounded-xl font-medium text-center transition-all shadow-sm">Log In</a>
+                                        <a href="{{ route('register') }}" class="w-full bg-white border border-stone-200 hover:border-stone-300 text-stone-700 py-3 rounded-xl font-medium text-center transition-all">Create Account</a>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-stone-700 mb-1">Event Date</label>
-                                    <input type="date" name="event_date" class="w-full bg-stone-50 border-stone-200 rounded-xl focus:border-champagne-500 focus:ring-champagne-500">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-stone-700 mb-1">Message</label>
-                                    <textarea name="message" rows="4" class="w-full bg-stone-50 border-stone-200 rounded-xl focus:border-champagne-500 focus:ring-champagne-500" placeholder="Hi, I'm interested in your services for my wedding..." required></textarea>
-                                </div>
-                                <button type="submit" class="w-full bg-navy-900 hover:bg-navy-800 text-white py-3 rounded-xl font-medium transition-all shadow-sm">
-                                    Send Message
-                                </button>
-                            </form>
+                            @endauth
                         </div>                    </div>
                 </div>
 
