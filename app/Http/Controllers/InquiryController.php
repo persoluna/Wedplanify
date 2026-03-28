@@ -16,6 +16,24 @@ class InquiryController extends Controller
             return back()->with('error', 'You must be logged in as a client to send an inquiry.');
         }
 
+        // Check if the client already has an active inquiry for this vendor/agency
+        if ($client = auth()->user()->client) {
+            $existingInquiry = Inquiry::where('client_id', $client->id)
+                ->where(function($query) use ($type, $id) {
+                    if ($type === 'vendor') {
+                        $query->where('vendor_id', $id);
+                    } else if ($type === 'agency') {
+                        $query->where('agency_id', $id);
+                    }
+                })
+                ->whereNotIn('status', ['booked', 'cancelled', 'unavailable'])
+                ->first();
+
+            if ($existingInquiry) {
+                return back()->with('error', 'You already have an active inquiry for this professional. Please wait for them to respond or check your dashboard.');
+            }
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',

@@ -14,7 +14,7 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\Action;
-use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\RecordActionsPosition;
@@ -57,22 +57,17 @@ class InquiriesTable
                     ->money('INR')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                BadgeColumn::make('status')
-                    ->colors([
-                        'gray' => 'new',
-                        'info' => 'in_progress',
-                        'success' => 'booked',
-                        'primary' => 'responded',
-                        'danger' => fn ($state) => in_array($state, ['cancelled', 'unavailable']),
+                SelectColumn::make('status')
+                    ->options([
+                        'new' => 'New',
+                        'in_progress' => 'In progress',
+                        'responded' => 'Responded',
+                        'booked' => 'Booked',
+                        'cancelled' => 'Cancelled',
+                        'unavailable' => 'Unavailable',
                     ])
-                    ->icons([
-                        'heroicon-o-clock' => 'new',
-                        'heroicon-o-arrow-path' => 'in_progress',
-                        'heroicon-o-check-circle' => 'booked',
-                        'heroicon-o-envelope-open' => 'responded',
-                        'heroicon-o-x-circle' => ['cancelled', 'unavailable'],
-                    ])
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
                 IconColumn::make('is_urgent')
                     ->boolean()
                     ->label('Urgent'),

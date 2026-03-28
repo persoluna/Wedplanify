@@ -208,9 +208,10 @@
 
                                         return {
                                             title: title,
-                                            start: a.date,
+                                            start: typeof a.date === 'string' ? a.date.substring(0, 10) : a.date,
                                             allDay: true,
-                                            color: color,
+                                            backgroundColor: color,
+                                            borderColor: color,
                                             display: 'background'
                                         };
                                     });
@@ -227,6 +228,15 @@
                                         },
                                         validRange: {
                                             start: new Date().toISOString().split('T')[0] // Only show from today onwards
+                                        },
+                                        dateClick: function(info) {
+                                            const dateInput = document.querySelector('input[name="event_date"]');
+                                            if (dateInput) {
+                                                dateInput.value = info.dateStr;
+                                                dateInput.classList.add('ring-2', 'ring-champagne-500', 'animate-pulse');
+                                                setTimeout(() => dateInput.classList.remove('animate-pulse', 'ring-2', 'ring-champagne-500'), 1500);
+                                                // Removed annoying window.scrollTo behavior
+                                            }
                                         }
                                     });
                                     calendar.render();
