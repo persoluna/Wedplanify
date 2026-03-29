@@ -1,4 +1,4 @@
-@props(['title' => 'Nuptial | Luxe Wedding Marketplace', 'transparentNav' => false])
+@props(['title' => 'Wedplanify | Luxe Wedding Marketplace', 'transparentNav' => false])
 
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">

@@ -6,7 +6,7 @@
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
         <div class="col-span-1 md:col-span-2">
-            <h2 class="font-display text-2xl mb-4">NUPTIAL<span class="text-champagne-500">.</span></h2>
+            <h2 class="font-display text-2xl mb-4">WEDPLANIFY<span class="text-champagne-500">.</span></h2>
             <p class="text-stone-400 max-w-sm font-light leading-relaxed text-sm">
                 The curated marketplace for modern weddings. Connecting couples with the world's finest agencies and creatives.
             </p>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 mt-10 pt-6 border-t border-stone-800 flex flex-col md:flex-row justify-between text-xs text-stone-500">
-        <p>&copy; {{ date('Y') }} Nuptial Inc. All rights reserved.</p>
+        <p>&copy; {{ date('Y') }} Wedplanify Inc. All rights reserved.</p>
         <div class="flex gap-6 mt-4 md:mt-0">
             <span class="hover:text-white cursor-pointer">Privacy Policy</span>
             <span class="hover:text-white cursor-pointer">Terms of Service</span>

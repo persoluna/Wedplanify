@@ -104,8 +104,8 @@
                         </button>
                         <div x-show="expanded === 'budget'" x-transition class="pb-4 flex flex-col gap-4">
                             <div class="grid grid-cols-2 gap-3">
-                                <input type="number" wire:model.live.debounce.500ms="min_price" placeholder="Min $" class="w-full bg-[#f4f2ee] border-transparent rounded-xl focus:ring-0 focus:border-champagne-400 text-sm py-2">
-                                <input type="number" wire:model.live.debounce.500ms="max_price" placeholder="Max $" class="w-full bg-[#f4f2ee] border-transparent rounded-xl focus:ring-0 focus:border-champagne-400 text-sm py-2">
+                                <input type="number" wire:model.live.debounce.500ms="min_price" placeholder="Min ₹" class="w-full bg-[#f4f2ee] border-transparent rounded-xl focus:ring-0 focus:border-champagne-400 text-sm py-2">
+                                <input type="number" wire:model.live.debounce.500ms="max_price" placeholder="Max ₹" class="w-full bg-[#f4f2ee] border-transparent rounded-xl focus:ring-0 focus:border-champagne-400 text-sm py-2">
                             </div>
                         </div>
                     </div>
@@ -189,7 +189,7 @@
                                         @if($listing->min_price)
                                             <div class="text-right">
                                                 <span class="text-[9px] uppercase tracking-widest text-white/60 block mb-0.5">Starting</span>
-                                                <span class="text-lg font-bold text-white">${{ number_format($listing->min_price) }}</span>
+                                                <span class="text-lg font-bold text-white">₹{{ number_format($listing->min_price) }}</span>
                                             </div>
                                         @endif
                                     </div>
@@ -242,7 +242,7 @@
                     <div>
                         <span class="text-[10px] uppercase tracking-widest text-black/40 block mb-1">Starting Investment</span>
                         <template x-if="quickView?.price">
-                            <span class="text-2xl font-medium text-navy-900" x-text="`$${quickView.price.toLocaleString()}`"></span>
+                            <span class="text-2xl font-medium text-navy-900" x-text="`₹${quickView.price.toLocaleString()}`"></span>
                         </template>
                         <template x-if="!quickView?.price">
                             <span class="text-xl font-medium text-navy-900">Custom</span>

@@ -12,7 +12,7 @@
         <a href="/"
            :class="{'text-white': isHome && !scrolled, 'text-navy-900': !(isHome && !scrolled)}"
            class="font-display text-2xl tracking-widest font-bold transition-colors">
-            NUPTIAL<span :class="{'text-champagne-300': isHome && !scrolled, 'text-champagne-500': !(isHome && !scrolled)}">.</span>
+            WEDPLANIFY<span :class="{'text-champagne-300': isHome && !scrolled, 'text-champagne-500': !(isHome && !scrolled)}">.</span>
         </a>
 
         <div class="hidden md:flex items-center space-x-10">

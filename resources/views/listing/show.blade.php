@@ -1,4 +1,4 @@
-<x-layouts.app title="{{ $listing->business_name }} - Nuptial">
+<x-layouts.app title="{{ $listing->business_name }} - Wedplanify">
     <div class="bg-stone-50 min-h-screen pb-20">
         <!-- Hero Header with Banner Background -->
         <div class="relative h-[400px] bg-navy-900 overflow-hidden">
@@ -261,9 +261,9 @@
                             <div class="mb-6">
                                 <p class="text-sm text-stone-500 mb-1">Starting at</p>
                                 <div class="text-3xl font-serif text-navy-900">
-                                    ${{ number_format($listing->min_price) }}
+                                    ₹{{ number_format($listing->min_price) }}
                                     @if($listing->max_price)
-                                        <span class="text-lg text-stone-400"> - ${{ number_format($listing->max_price) }}</span>
+                                        <span class="text-lg text-stone-400"> - ₹{{ number_format($listing->max_price) }}</span>
                                     @endif
                                 </div>
                             </div>

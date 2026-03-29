@@ -3,7 +3,7 @@
         <div class="w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden p-8 border border-stone-100">
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-display font-bold text-stone-900">Create an Account</h2>
-                <p class="text-stone-500 mt-2">Sign up to start planning your perfect day with Nuptial</p>
+                <p class="text-stone-500 mt-2">Sign up to start planning your perfect day with Wedplanify</p>
             </div>
 
             @if($errors->any())

@@ -1,4 +1,4 @@
-<x-layouts.app title="Explore - Nuptial">
+<x-layouts.app title="Explore - Wedplanify">
     <div class="bg-stone-50 min-h-screen pt-24 pb-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 class="text-4xl font-serif text-navy-900 mb-8">Explore Vendors & Agencies</h1>
@@ -152,7 +152,7 @@
                                                 <div class="text-right">
                                                     @if($listing->listing_type === 'vendor' && $listing->min_price)
                                                         <span class="text-xs text-stone-400 block mb-0.5">Starting at</span>
-                                                        <span class="font-medium text-champagne-600">${{ number_format($listing->min_price) }}</span>
+                                                        <span class="font-medium text-champagne-600">₹{{ number_format($listing->min_price) }}</span>
                                                     @else
                                                         <span class="inline-flex items-center justify-center p-2 rounded-full bg-stone-50 text-stone-400 group-hover:bg-champagne-500 group-hover:text-white transition-colors">
                                                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>

@@ -108,6 +108,6 @@ class ExploreListings extends Component
         return view('livewire.explore-listings', [
             'listings' => $paginated,
             'categories' => Category::all(),
-        ])->layout('components.layouts.app', ['title' => 'Explore - Nuptial']);
+        ])->layout('components.layouts.app', ['title' => 'Explore - Wedplanify']);
     }
 }
