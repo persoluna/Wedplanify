@@ -48,6 +48,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ReviewController;
+use App\Livewire\JoinRegistry;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [ClientController::class, 'dashboard'])->name('dashboard');
@@ -60,3 +61,5 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/saved', function () {
     return view('client.saved');
 })->name('saved.index');
+
+Route::get('/join', JoinRegistry::class)->name('join');

@@ -165,17 +165,82 @@
     </div>
 
     <!-- CTA Join Registry -->
-    <div class="h-[100px] bg-linear-to-b from-transparent to-[#0b0b0b] z-10 relative -mb-1"></div>
-    <div class="bg-[#0b0b0b] py-24 text-center text-white relative overflow-hidden">
-        <div class="absolute inset-0 opacity-20">
-            <img src="https://images.unsplash.com/photo-1511285560982-1351cdeb9821?auto=format&fit=crop&q=80" class="w-full h-full object-cover grayscale" />
-            <div class="absolute inset-0 bg-linear-to-t from-[#0b0b0b] via-transparent to-[#0b0b0b]"></div>
-        </div>
-        <div class="relative z-10 px-6 max-w-[600px] mx-auto flex flex-col items-center">
-            <span class="inline-block py-1 px-4 rounded-full border border-champagne-500/30 text-champagne-400 text-[10px] tracking-[0.25em] uppercase mb-6">For Professionals</span>
-            <h2 class="font-display text-4xl md:text-5xl font-medium mb-6 leading-tight">Join the Registry</h2>
-            <p class="text-white/60 mx-auto mb-10 font-light text-lg leading-relaxed">Are you a wedding professional? Apply to join our curated network of top-tier agencies and creatives.</p>
-            <button class="bg-white text-stone-900 px-12 py-5 rounded-full font-bold tracking-widest uppercase text-sm hover:bg-champagne-100 transition-all duration-300 shadow-2xl hover:scale-105">Apply Now</button>
+    <div class="py-24 bg-stone-50 relative overflow-hidden">
+        <!-- Background Ambient Blurs -->
+        <div class="absolute top-0 right-0 -m-32 w-96 h-96 bg-champagne-100/50 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 -m-32 w-96 h-96 bg-champagne-50/50 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6">
+            <div class="bg-black rounded-[40px] overflow-hidden shadow-2xl relative">
+
+                <!-- Background Image & Gradient -->
+                <div class="absolute inset-0">
+                    <img src="https://images.unsplash.com/photo-1511285560982-1351cdeb9821?auto=format&fit=crop&q=80" alt="Wedding Professional working" class="w-full h-full object-cover opacity-40 mix-blend-overlay transition-transform duration-[20s] hover:scale-105" />
+                    <div class="absolute inset-0 bg-linear-to-r from-black via-black/80 to-black/20"></div>
+                </div>
+
+                <div class="relative flex flex-col md:flex-row items-center">
+
+                    <!-- Text Content -->
+                    <div class="p-10 md:p-20 text-white w-full md:w-1/2">
+                        <span class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full border border-champagne-500/30 text-champagne-400 text-[10px] tracking-[0.25em] uppercase mb-8 bg-black/50 backdrop-blur-md">
+                            <span class="w-1.5 h-1.5 rounded-full bg-champagne-400 animate-pulse"></span>
+                            For Professionals
+                        </span>
+
+                        <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-medium mb-6 leading-tight tracking-wide">
+                            Join the <br/> <span class="text-champagne-400 italic font-serif pr-2">Registry</span>
+                        </h2>
+
+                        <p class="text-white/60 mb-10 font-light text-lg leading-relaxed max-w-md">
+                            Elevate your business by joining our highly curated network of top-tier wedding agencies and industry creatives. Gain access to premium clientele and exclusive tools tailored for luxury professionals.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row items-center gap-6">
+                            <a href="/join" class="bg-white text-black px-10 py-4 rounded-xl font-medium tracking-wide hover:bg-champagne-400 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(200,169,126,0.3)] hover:-translate-y-1 text-center w-full sm:w-auto">
+                                Apply Now
+                            </a>
+                            <a href="/join#benefits" class="text-white/70 hover:text-white uppercase tracking-widest text-xs font-bold transition-colors w-full sm:w-auto text-center">
+                                View Benefits
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Decorative Floating Elements -->
+                    <div class="hidden md:block w-1/2 p-12">
+                        <div class="relative w-full h-[400px]">
+                            <!-- Main Glass Card -->
+                            <div class="absolute right-4 top-1/2 -translate-y-1/2 w-[340px] bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.5)] transform -rotate-2 hover:rotate-0 transition-all duration-500">
+                                <div class="flex items-center justify-between mb-8">
+                                    <div class="w-12 h-12 rounded-full bg-linear-to-tr from-champagne-600 to-amber-200 flex items-center justify-center p-0.5">
+                                        <div class="w-full h-full bg-black rounded-full flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-champagne-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg>
+                                        </div>
+                                    </div>
+                                    <span class="text-white/50 font-mono text-[10px] tracking-widest uppercase">Verified Partner</span>
+                                </div>
+                                <h4 class="text-2xl text-white font-serif mb-3 leading-tight">Grow Your Base</h4>
+                                <p class="text-white/60 font-light text-sm leading-relaxed">
+                                    Showcase your luxurious portfolio to thousands of engaged couples looking for exactly what you do.
+                                </p>
+                            </div>
+
+                            <!-- Small Accent Element -->
+                            <div class="absolute left-10 bottom-16 bg-[#1a1a1a]/80 backdrop-blur-md border border-white/10 py-4 px-5 rounded-2xl shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-500 delay-100 flex items-center gap-4">
+                                <div class="flex -space-x-3">
+                                    <div class="w-8 h-8 rounded-full border-2 border-[#1a1a1a] bg-stone-200 overflow-hidden"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100&h=100" alt="Lead" class="w-full h-full object-cover"></div>
+                                    <div class="w-8 h-8 rounded-full border-2 border-[#1a1a1a] bg-stone-300 overflow-hidden"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=100&h=100" alt="Lead" class="w-full h-full object-cover"></div>
+                                    <div class="w-8 h-8 rounded-full border-2 border-[#1a1a1a] bg-champagne-400 flex items-center justify-center text-black text-[10px] font-bold">+12</div>
+                                </div>
+                                <div>
+                                    <div class="text-white text-xs font-medium">New Inquiries</div>
+                                    <div class="text-champagne-400 text-[10px] font-mono mt-0.5">This week</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
