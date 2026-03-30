@@ -30,26 +30,8 @@
                 </a>
             </div>
 
-            <!-- Conversational Search Bar -->
-            <form action="/explore" method="GET" class="relative z-50 w-full max-w-[700px] mx-auto animate-[fade-in-up_1.6s_ease-out]">
-                <div class="relative group">
-                    <div class="relative flex items-center bg-white/10 backdrop-blur-[10px] rounded-full p-[14px] px-[20px] border border-white/10 shadow-2xl overflow-hidden focus-within:border-white/30 transition-colors duration-300">
-                        <div class="pl-2 pr-2 text-white/50">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                        </div>
-                        <input
-                            type="text"
-                            name="search"
-                            placeholder="Find photographers in Mumbai for December..."
-                            class="w-full bg-transparent border-none outline-none text-white placeholder-white/50 text-lg md:text-xl font-sans px-4 h-10 focus:ring-0"
-                            autocomplete="off"
-                        >
-                        <button type="submit" class="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors duration-300 backdrop-blur-md border border-white/10 shrink-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                        </button>
-                    </div>
-                </div>
-            </form>
+            <!-- Conversational Search Bar Powered By Livewire -->
+            <livewire:ai-search-modal />
         </div>
     </div>    <!-- Guided Planning Section (NEW) -->
     <div id="guided-planning" class="bg-[#FAF9F7] py-[80px] px-6 md:px-12 relative z-20">
