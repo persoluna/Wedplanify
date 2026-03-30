@@ -1,22 +1,23 @@
-# Wedding Platform Backend - Context Note
+# Wedplanify Backend - Context Note
 
 ## Overview
-This is a Laravel 12 application acting primarily as a backend and admin interface for a curated wedding marketplace. It manages users (admins, agencies, vendors, clients), assets, inquiries, bookings, and services. 
+This is a Laravel 12 application acting primarily as a backend and admin interface for a curated luxury wedding marketplace. It manages users (admins, agencies, vendors, clients), assets, inquiries, bookings, and services with a dedicated locale focused entirely around the Indian wedding market.
 
 ## Key Technologies
 - **Core Framework**: Laravel 12 on PHP 8.3
 - **Admin Interface/Panels**: Filament 4 with `filament-shield` for role management.
-- **Media Management**: Spatie Media Library (used for logos, banners, documents, etc.).
-- **Permissions**: Spatie Laravel Permission.
-- **Frontend Views**: Laravel Blade + Livewire 3 (for explore listings).
+- **Media Management**: Spatie Media Library.
+- **Frontend Views**: Laravel Blade + Livewire 3 (Reactive filtering, `/join` flow).
+- **Search Logic**: Native PostgreSQL string matching supplemented with AI-powered search (Gemini API). 
 - **Docker**: Laravel Sail environment running PostgreSQL (`pgsql`).
 
 ## Core Domains / Models (`app/Models/*`)
 The project utilizes standard Eloquent models with rich relationships and Spatie Media Library integrations:
+- `ProfessionalApplication`: Intake pipeline where prospective vendors sit pending `Super Admin` approval. 
 - `Agency`: Wedding planning agencies, possessing multiple vendors.
-- `Vendor`: Specific services with pricing, working hours, locations. Includes categories and tags. Supports polymorphic relations for generic structures.
+- `Vendor`: Specific services with pricing, working hours, locations.
 - `Client`: General profiles for the end users.
-- `Inquiry` & `Booking`: Life cycle elements linking a `Client` to a `Vendor` or `Agency`.
+- `Inquiry` & `Booking`: Life cycle elements linking a `Client` to a `Vendor` or `Agency`. 
 - **Polymorphism**: Features like `Review`, `Booking`, `Faq`, `Package`, `PortfolioImage` are morphable to both `Agency` and `Vendor`. 
 
 ## Architecture & Logic
@@ -52,8 +53,9 @@ The project utilizes standard Eloquent models with rich relationships and Spatie
 - Uses Spatie roles table generation (`2025_11_05_000000_create_permission_tables`) and Media handling (`2025_11_23_000001_create_media_table`).
 
 ### 4. Frontend Ecosystem (`resources/views/`)
-- Implements traditional blade component scaffolding.
-- `resources/views/layouts/` holds structure (`app`, `footer`, `navbar`).
-- Auth-specific views (`login`, `register`).
-- Dedicated Client module (`client/dashboard`, `client/review_create`, `client/saved`).
-- Integration of **Livewire v3** notably in `livewire/explore-listings.blade.php` and a custom pagination view `luxury-pagination.blade.php` to run the dynamic component routing specified in `routes/web.php`.
+- Implements traditional blade component scaffolding (`layouts/app`, `layouts/footer`, `layouts/navbar`).
+- Auth-specific views (`login`, `register`) explicitly utilizing native Laravel web routing.
+- Integration of **Livewire v3**:
+  - `ExploreListings.php`: Implements continuous reactive routing with `#[Url]` bounds and handles database interactions, paginator hydration, and calling AI search.
+  - `JoinRegistry.php`: Captures multi-level vendor data structurally submitting it to `ProfessionalApplications`.
+- **LocalStorage Data Tracking**: Save listing logic is performed asynchronously on the client-side using JavaScript localStorage, hydrating heart-icons conditionally before the user authenticates.

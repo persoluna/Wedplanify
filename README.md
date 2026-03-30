@@ -1,8 +1,8 @@
-# Wedding Platform Backend
+# Wedplanify Backend
 
 > 📸 **[View Screenshots & Feature Showcase →](SHOWCASE.md)**
 
-A Laravel 12 + Filament 4 backend that powers a curated wedding marketplace. The system lets administrators, agencies, and vendors collaborate on inquiries, bookings, and marketing assets while exposing a clean read-only API for the public website.
+A Laravel 12 + Livewire 3 + Filament 4 backend that powers a curated luxury wedding marketplace. The system lets administrators, agencies, and vendors collaborate on inquiries, bookings, and marketing assets while exposing a clean public explore page with real-time reactive filtering, AI-powered search, and a beautiful booking pipeline in INR.
 
 ---
 
@@ -12,7 +12,7 @@ A Laravel 12 + Filament 4 backend that powers a curated wedding marketplace. The
 | --- | --- |
 | Centralize supply | Capture all agencies, vendors, services, and media in one authoritative database with soft-delete safety rails. |
 | Empower operations | Provide Filament panels tailored for admins, agencies, and vendors, so each role can act on inquiries, availability, and promotions. |
-| Feed the frontend | Deliver fast, filterable JSON endpoints for agencies and vendors so the marketing site can showcase live data. |
+| Feed the frontend | Deliver fast, Livewire-driven exploration endpoints with interactive AI Search and Booking Calendars. |
 
 ---
 
@@ -34,13 +34,13 @@ A Laravel 12 + Filament 4 backend that powers a curated wedding marketplace. The
 
 | Area | Highlights | Key Files |
 | --- | --- | --- |
-| Users & Roles | Soft-deletable users with dependency-aware deletion, role assignments, login tracking. | `app/Models/User.php`, `app/Filament/Resources/Users/Tables/UsersTable.php` |
+| Users & Roles | Soft-deletable users with dependency-aware deletion, role assignments, login tracking. Super admin gate intercept bypass logic for unconditional dashboard overrides. | `app/Models/User.php`, `app/Filament/Resources/Users/Tables/UsersTable.php`, `app/Providers/AppServiceProvider.php` |
 | Agencies | Rich profile fields, media attachments, vendor relationships, rating metrics. | `app/Models/Agency.php`, `app/Filament/Resources/Agencies/*` |
-| Vendors | Category + pricing info, services, availability calendar, agency partnerships. | `app/Models/Vendor.php`, `app/Filament/Resources/Vendors/*` |
-| Clients & Inquiries | Inquiry lifecycle (new → responded → booked), urgency flags, follow-up tracking, messaging. | `app/Models/Client.php`, `app/Models/Inquiry.php`, `app/Filament/Resources/Inquiries/*` |
-| Matching & Bookings | Morph relationships for packages, bookings, reviews, FAQs that attach to agencies or vendors. | `app/Models/Booking.php`, `app/Models/Package.php`, etc. |
-| Media | `media` migration + collections for logo/banner/gallery/documents enforce consistent storage. | `database/migrations/2025_11_23_000001_create_media_table.php` |
-| Public API | Read-only endpoints for agencies/vendors with filtering, sorting, pagination, media URLs. | `routes/api.php`, `app/Http/Controllers/Api/V1/*`, `app/Http/Resources/*` |
+| Vendors | Category + pricing info in INR, services, availability calendar, agency partnerships. | `app/Models/Vendor.php`, `app/Filament/Resources/Vendors/*` |
+| Clients & Inquiries | Inquiry lifecycle (new → responded → booked), duplicate inquiry interception, urgency flags, follow-up tracking, database push notifications. | `app/Models/Client.php`, `app/Models/Inquiry.php`, `app/Filament/Resources/Inquiries/*` |
+| Matching & Bookings | Morph relationships for packages, bookings, reviews, FAQs that attach to agencies or vendors. Full booking pipeline. | `app/Models/Booking.php`, `app/Models/Package.php`, etc. |
+| AI Search & UX | Gemini-powered semantic search integration overriding standard keyword logic, real-time Livewire reactive pagination, LocalStorage saved listings. | `app/Livewire/ExploreListings.php`, `resources/views/livewire/join-registry.blade.php` |
+| Professional Registry | Frontend vendor onboarding form (`/join`) transitioning into the Filament Professional Application Approval workflow. | `app/Filament/Resources/ProfessionalApplications/*` |
 
 ---
 
@@ -48,6 +48,7 @@ A Laravel 12 + Filament 4 backend that powers a curated wedding marketplace. The
 
 ### 4.1 Users & Roles
 - Users cover admins, agencies, vendors, and clients; role logic flows through Filament resources and policies.
+- **Super Admin Intercept**: Configured `Gate::before` intercept so those with the `super_admin` role have automatic absolute bypass permissions on all models.
 - Soft deletes are enforced everywhere, with guardrails in `UsersTable` that hide delete buttons when dependencies exist and deliver persistent warnings before force deletes.
 - Spatie Media Library allows avatars/documents to attach just like vendor logos.
 
@@ -57,16 +58,18 @@ A Laravel 12 + Filament 4 backend that powers a curated wedding marketplace. The
 - Helpers such as `incrementViewsCount()` and `updateRatingStats()` keep dashboard metrics accurate.
 - Filament resources provide search, Trashed filters, toggled columns, and scoped delete/restore/force actions.
 
-### 4.3 Vendors
-- Vendors include pricing ranges (`min_price`, `max_price`, `price_unit`), service areas, social links, arbitrary JSON `attributes`.
+### 4.3 Vendors & The Registry Pipeline
+- **Join Registry**: Prospective professionals do not instantly become vendors. They enroll via the `/join` Livewire route to create a `ProfessionalApplication`.
+- **Admin Approval**: Admins review `ProfessionalApplications` inside Filament and trigger an Action mapping to `options()` approval hooks, converting them into active user records.
+- Vendors include pricing ranges (`min_price`, `max_price`, `price_unit`) based globally around INR, service areas, social links, arbitrary JSON `attributes`.
 - Connected to categories, owning agencies, services, event types, tags, availability slots.
-- Availability helper `isAvailableOn()` lets the frontend build calendars without duplicating logic.
-- Media collections mirror agencies for consistent UX.
+- **Availability & Bookings**: `isAvailableOn()` natively prevents double-booking logic on the public UI Calendar view.
 
-### 4.4 Clients & Inquiries
+### 4.4 Clients, Interception & Inquiries
 - Inquiries capture event metadata, budget, urgency, multiple note channels, and timestamps for response/follow-up/closure.
+- **Spam / Duplicate Block**: Livewire inquiry modal checks for existing unresolved vendor-client pairs to prevent double-messaging.
 - Convenience methods (`markAsResponded`, `recordFollowUp`, `close`) prevent inconsistent status transitions.
-- Messages, bookings, vendors, and agencies all relate back to each inquiry for auditing.
+- **Database Push Notifications**: Emitted natively when Inquiry statuses transition so users get Filament UI alerts immediately.
 
 ### 4.5 Matching, Services, Packages
 - Services, packages, reviews, FAQs, and bookings rely on morph relationships so they can belong to either agencies or vendors.

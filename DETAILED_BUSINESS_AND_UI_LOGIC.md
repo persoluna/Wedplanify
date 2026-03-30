@@ -1,10 +1,10 @@
-# Wedding Platform - Detailed Features, UI/UX & Business Logic
+# Wedplanify Platform - Detailed Features, UI/UX & Business Logic
 
 This document dives deep into the underlying business rules, specific features, User Interface logic, and architectural reasons guiding `wedding-platform-backend`. 
 
 ## 1. Platform Objectives & Core Principles
 **Objective**: Build a curated, high-end marketplace connecting engaged couples (Clients) with Wedding Agencies and individual Vendors. 
-**Business Goal**: Serve as an all-in-one centralized management portal for three distinct entities (Admins, Agencies, Vendors) using **Filament PHP** while providing a decoupled, real-time JSON API infrastructure and heavily integrated Livewire frontend for the public/consumers.
+**Business Goal**: Serve as an all-in-one centralized management portal for three distinct entities (Admins, Agencies, Vendors) using **Filament PHP** while providing a decoupled, real-time Livewire frontend heavily customized for the public/consumers in the localized Indian market.
 
 ### Architectural Philosophy:
 - **Resilience via Soft Deletes**: The wedding industry involves massive high-stakes records (budgets, deposits). Therefore, *everything* handles soft deletion (`deleted_at`). A strict rule prevents Hard Deleting any entity that has relational dependencies.
@@ -35,6 +35,12 @@ This document dives deep into the underlying business rules, specific features, 
 - **Vendor**: A specific service provider (e.g., Catorer, Photographer) linked either directly to the Admin or operating beneath an `owning_agency_id`. 
 **Availability Logic**: Vendors record schedules in `VendorAvailability.php` allowing the API to verify capacity via date lookup before clients make an inquiry.
 
+### C. User Application & Professional Registry (`/join`)
+**Vendor Authorization Logic**:
+1. Users don't natively register as `Vendor` right away. To maintain marketplace quality, aspiring professionals utilize the `/join` page (a specialized Livewire form).
+2. The form saves a `ProfessionalApplication` model recording business type, size, location, and metadata.
+3. Filament Action Modals (in `ProfessionalApplicationResource`) allow the Admin to `Approve & Setup` which creates the final `User`, `Vendor`, and applies roles concurrently using the `Role::where('name')` pattern.
+
 ---
 
 ## 3. UI / UX Logic & Application Flow
@@ -42,8 +48,11 @@ This document dives deep into the underlying business rules, specific features, 
 ### A. Consumer Frontend (Livewire & Blade)
 The primary user-facing tool is found at `/explore` via `App\Livewire\ExploreListings`:
 - **State Management**: Uses URL-binding attributes `#[Url(except: '')]` so filters (search, city, category, min/max price, listing type) represent directly in the browser's address bar. This allows easy deep-linking and SEO compatibility.
-- **Unified Pagination**: Combines collections of both `Agencies` and `Vendors` simultaneously using manual `LengthAwarePaginator` instantiation to provide 1 unified list to the client, mapped using synthetic `listing_type` properties. Note the use of `ilike` in Postgres for case-insensitive search.
-- **Styling**: Relies heavily on a custom `luxury-pagination.blade.php` to project a high-end visual aesthetic fitting the wedding market rather than default UI components.
+- **AI Semantic Search**: Before falling back to standard string searches, the `Gemini API` handles natural language parsing of user terms.
+  - *Example*: A user searching "I need a large tent organizer under 40000" triggers logic which evaluates budget vs string intention intelligently mapped to tags and categories.
+- **Unified Pagination**: Combines collections of both `Agencies` and `Vendors` simultaneously using manual `LengthAwarePaginator` instantiation to provide 1 unified list to the client.
+- **Save Strategy**: Listing favorites/saves are primarily kept in the user's browser `LocalStorage` via Javascript to reduce unauthenticated server writes, populating visual indicators immediately, syncing to their profile only after a successful Client login.
+- **Styling**: Relies heavily on a custom `luxury-pagination` and dark glassmorphism (Benefits sections) to project a high-end visual aesthetic fitting the wedding market.
 
 ### B. Filament Dashboards (Admin / Providers UX)
 - **Role-Based Menus**: Uses Filament Shield to parse UI elements conditionally based on granular resource permissions.

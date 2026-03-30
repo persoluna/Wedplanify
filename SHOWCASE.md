@@ -1,17 +1,22 @@
-# 🎊 Wedding Platform - Visual Showcase
+# 🎊 Wedplanify - Visual Showcase
 
-> A comprehensive look at the Wedding Platform admin panels and features built with Laravel 12 + Filament 4.
+> A comprehensive look at the Wedplanify platform and admin panels built with Laravel 12, Livewire 3 + Filament 4.
 
 ---
 
 ## 📸 Screenshots
 
-### Authentication
+### Authentication & Intake
 
 #### Login Page
 Clean, modern login interface with dark theme support.
 
 ![Login Page](screenshots/login-wedding-platform.png)
+
+#### Professional Join Registry
+Livewire form allowing aspiring vendors to submit their business details for admin review.
+
+![Join Page](screenshots/join-registry-wedding-platform.png) *[Placeholder]*
 
 ---
 
@@ -99,6 +104,11 @@ Full inquiry workflow management with notes, messages, and status transitions.
 
 ## ✨ Key Features
 
+### 🌐 Frontend Livewire & AI
+- **Semantic Generative Search**: Powered by Gemini API to parse natural language constraints ("Looking for a large venue under 50000").
+- **Reactive Pagination**: Instant query-string routing matching filter combinations without full page refreshes.
+- **Client Side Saves**: Utilizes LocalStorage for immediate 'favorites' rendering on the explore page.
+
 ### 🔐 Multi-Panel Authentication
 - **Admin Panel** (`/admin`) - Full platform control
 - **Agency Panel** (`/agency`) - Agency-specific dashboard
@@ -144,7 +154,7 @@ Easily share your local development environment for demos and testing:
 ### 🔒 Role-Based Access Control
 - Filament Shield integration
 - Granular permissions per resource and action
-- Custom policies for complex authorization logic
+- Explicit authorization via AppServiceProvider Gate intercepts.
 
 ---
 

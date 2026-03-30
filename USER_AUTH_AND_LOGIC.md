@@ -1,4 +1,4 @@
-# Wedding Platform - User Logic, Authority & Authentication Specifications
+# Wedplanify Platform - User Logic, Authority & Authentication Specifications
 
 This document thoroughly maps the permission boundaries, authorization routes, and isolation principles driving the `wedding-platform-backend`. High-stakes platforms holding deposits and bookings require bulletproof scopes. Below is exactly how this is achieved.
 
@@ -10,6 +10,9 @@ There is a single `users` table configured via `app/Models/User.php` with a defi
 - **`agency`**: Business umbrellas capable of managing multiple vendors and broad inquiries.
 - **`vendor`**: Singular professionals or service operators (e.g., specific photographers).
 - **`client`**: The front-facing customers (engaged couples) generating inquiries and purchases.
+
+**Registry Applications (The Pre-User State)**:
+Rather than exposing default web registration routes for Vendors (which could lead to spam), the system uses `ProfessionalApplications` captured on the `/join` page. An admin explicitly triggers the `convert to User -> ->assignRole()` pipeline within the administrative interface.
 
 **Extensibility**: The user entity utilizes traits for deep features:
 - `HasRoles` (via `Spatie\Permission` & `Filament Shield`) allows granular, dynamic permissions assigned beyond default "types."
@@ -38,7 +41,7 @@ Clients use native Laravel authentication (`AuthController`), mostly routed via 
 Policies dictating data isolation exist in `/app/Policies/*`. The underlying philosophy is **Strict Ownership Isolation**.
 
 **Super Admin Override:** 
-All Policies contain a `before()` method. If a user holds the Spatie `super_admin` role, they instantly bypass all relation checks `return true`. 
+Via `AppServiceProvider.php`, the system calls `Gate::before(...)`. If the user `$user->hasRole('super_admin')`, it yields a `true` return. This tells Laravel to universally bypass checking specific permissions strings, ensuring a Super Admin never accidentally locks themselves out. 
 
 ### A. Agency Restrictions (`AgencyPolicy.php`)
 - **How**: Evaluated via `canAccessAgency()`.
