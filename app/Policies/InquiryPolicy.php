@@ -23,38 +23,47 @@ class InquiryPolicy
 
     public function viewAny(User $authUser): bool
     {
-        if (! $authUser->isAdmin() && ! $authUser->isAgency() && ! $authUser->isVendor()) {
-            return false;
+        if ($authUser->isAdmin()) {
+            return $authUser->can('ViewAny:Inquiry');
         }
 
-        return $authUser->can('ViewAny:Inquiry');
+        return $authUser->isAgency() || $authUser->isVendor();
     }
 
     public function view(User $authUser, Inquiry $inquiry): bool
     {
-        return $authUser->can('View:Inquiry')
-            && $this->canAccessInquiry($authUser, $inquiry);
+        if ($authUser->isAdmin()) {
+            return $authUser->can('View:Inquiry');
+        }
+
+        return $this->canAccessInquiry($authUser, $inquiry);
     }
 
     public function create(User $authUser): bool
     {
-        if (! $authUser->isAdmin() && ! $authUser->isAgency()) {
-            return false;
+        if ($authUser->isAdmin()) {
+            return $authUser->can('Create:Inquiry');
         }
 
-        return $authUser->can('Create:Inquiry');
+        return $authUser->isAgency();
     }
 
     public function update(User $authUser, Inquiry $inquiry): bool
     {
-        return $authUser->can('Update:Inquiry')
-            && $this->canAccessInquiry($authUser, $inquiry);
+        if ($authUser->isAdmin()) {
+            return $authUser->can('Update:Inquiry');
+        }
+
+        return $this->canAccessInquiry($authUser, $inquiry);
     }
 
     public function delete(User $authUser, Inquiry $inquiry): bool
     {
-        return $authUser->can('Delete:Inquiry')
-            && $this->canAccessInquiry($authUser, $inquiry);
+        if ($authUser->isAdmin()) {
+            return $authUser->can('Delete:Inquiry');
+        }
+
+        return $this->canAccessInquiry($authUser, $inquiry);
     }
 
     public function restore(User $authUser, Inquiry $inquiry): bool
