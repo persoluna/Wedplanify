@@ -161,7 +161,6 @@
                     </section>
 
                     <!-- Availability Calendar Section -->
-                    @if($listing->listing_type === 'vendor')
                     <section class="bg-white rounded-3xl p-8 border border-stone-200 shadow-sm" x-data="vendorCalendar()">
                         <div class="flex justify-between items-center mb-6 border-b border-stone-100 pb-4">
                             <h2 class="text-2xl font-serif text-navy-900">Availability</h2>
@@ -190,7 +189,7 @@
                         document.addEventListener('alpine:init', () => {
                             Alpine.data('vendorCalendar', () => ({
                                 init() {
-                                    const rawAvailabilities = @js($listing->availabilities ?? []);
+                                    const rawAvailabilities = @js($listing->mapped_availabilities ?? []);
                                     const events = rawAvailabilities.map(a => {
                                         let color = '#C2B28F'; // champagne-500 default available
                                         let title = 'Available';
@@ -245,7 +244,6 @@
                         });
                     </script>
                     @endpush
-                    @endif
                 </div>
 
                 <!-- Sidebar Column -->
